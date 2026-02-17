@@ -85,6 +85,10 @@ adminExpenseRouter.get('/', protect, admin, getAllExpensesAdmin);
 adminExpenseRouter.delete('/:id', protect, admin, deleteAnyExpenseAdmin);
 app.use('/api/admin/expenses', adminExpenseRouter);
 
+app.get('/', (req, res) => {
+    res.send('Hello World!');
+});
+
 
 const PORT = process.env.PORT || 5000;
 
@@ -100,3 +104,4 @@ process.on('unhandledRejection', (err, promise) => {
     // Close server & exit process
     server.close(() => process.exit(1));
 });
+
