@@ -40,8 +40,19 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Enable CORS
+const allowedOrigins = [
+    'http://localhost:3000',
+    'http://localhost:5173',
+    'https://ex-client-1.onrender.com'
+];
+
+if (process.env.CLIENT_URL) {
+    allowedOrigins.push(process.env.CLIENT_URL);
+}
+
+// Enable CORS
 app.use(cors({
-    origin: process.env.CLIENT_URL || 'http://localhost:3000',
+    origin: allowedOrigins,
     credentials: true,
 }));
 
@@ -76,6 +87,10 @@ app.use('/api/admin/expenses', adminExpenseRouter);
 
 
 const PORT = process.env.PORT || 5000;
+
+app.get('/', (req, res) => {
+    res.send('Hello World!');
+});
 
 const server = app.listen(PORT, console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`));
 
